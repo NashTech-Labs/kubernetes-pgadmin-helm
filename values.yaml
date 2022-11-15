@@ -1,0 +1,89 @@
+replicaCount: 1
+image:
+  repository: dpage/pgadmin4
+  tag: latest
+  pullPolicy: IfNotPresent
+imagePullSecrets: []
+service:
+  name: pgadmin
+  type: ClusterIP
+  port: 8080
+ingress:
+  enabled: ture
+  host: pgadmin.knoldus.io
+  ingressClass: traefik-ingress
+pgadmin:
+  username: knoldus@pgadmin.org
+persistence:
+  enabled: true
+  accessMode: ReadWriteOnce
+  size: 1Gi
+resources:
+  limits:
+    cpu: 500m
+    memory: 2048Mi
+  requests:
+    cpu: 100m
+    memory: 1024Mi
+env:
+  PGADMIN_SERVER_JSON_FILE: /servers/servers.json
+
+servers: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "knoldus-dev-1",
+          "Group": "Aurora Dev Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        },      
+        "2": {
+          "Name": "knoldus-dev-2",
+          "Group": "Aurora Dev Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        },        
+        "3": {
+          "Name": "knoldus-stg-1",
+          "Group": "Aurora Stg Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        },
+        "4": {
+          "Name": "knoldus-stg-2",
+          "Group": "Aurora Stg Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        },        
+        "5": {
+          "Name": "knoldus-prod-1",
+          "Group": "Aurora Prod Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        },
+        "6": {
+          "Name": "knoldus-prod-2",
+          "Group": "Aurora Prod Servers",
+          "Port": 5432,
+          "Username": "postgres",
+          "Host": "",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
+        }              
+      }
+    }
